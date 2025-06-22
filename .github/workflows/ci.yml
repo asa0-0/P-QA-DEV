@@ -1,0 +1,25 @@
+# Memberi nama pada alur kerja kita
+name: Jalankan Tes Proyek Tim Hebat
+
+# Pemicu: Jalankan setiap kali ada 'push'
+on: [push]
+
+jobs:
+  # Nama pekerjaan kita
+  cypress-run:
+    # Menjalankan di server virtual Ubuntu (Linux)
+    runs-on: ubuntu-latest
+    
+    # Langkah-langkah yang akan dijalankan oleh robot
+    steps:
+      # 1. Ambil kode dari repositori GitHub
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Jalankan tes Cypress menggunakan Action resmi
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          # Kita akan tes file index.html, jadi kita perlu server web sederhana
+          start: npm start
+          wait-on: 'http://localhost:8080' # Tunggu server lokal siap
